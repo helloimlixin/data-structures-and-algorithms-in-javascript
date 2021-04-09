@@ -65,7 +65,8 @@ if (rword === word) {
     };
 }
 
-// Tests for custom stack.
+/** Tests */
+
 var myStack = new Stack();
 myStack.push(1);
 myStack.push(2);

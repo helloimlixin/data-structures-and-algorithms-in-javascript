@@ -104,6 +104,8 @@ function mySet() {
     };
 }
 
+/** Tests */
+
 var setA = new mySet();
 var setB = new mySet();
 setA.add("a");
