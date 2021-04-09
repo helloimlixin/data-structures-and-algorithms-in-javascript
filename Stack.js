@@ -37,7 +37,7 @@ if (rword === word) {
     this.push = function(value) {
         this.storage[this.count] = value;
         this.count++;
-    }
+    };
 
     // Removes and returns the value on top of the stack.
     this.pop = function() {
@@ -52,17 +52,17 @@ if (rword === word) {
         var result = this.storage[this.count];
         delete this.storage[this.count]; // remove the top item
         return result;
-    }
+    };
 
     // Returns the number of stack elements.
     this.size = function() {
         return this.count; 
-    }
+    };
 
     // Returns the value on top of the stack.
     this.peek = function(value) {
         return this.storage[this.count - 1];
-    }
+    };
 }
 
 // Tests for custom stack.
