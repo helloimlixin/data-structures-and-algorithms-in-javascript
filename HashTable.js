@@ -20,6 +20,9 @@ var hash = (string, max) => {
     return hash % max; // return the hash code
 };
 
+/**
+ * Hash Table implementation.
+ */
 let HashTable = function () {
     let storage = []; // storage array
     const storageLimit = 4; // number of buckets
@@ -60,6 +63,10 @@ let HashTable = function () {
         }
     };
 
+    /**
+     * Method that implements removal of a Hash Table entry.
+     * @param {string} key identifies the entry to be removed
+     */
     this.remove = function(key) {
         var index = hash(key, storageLimit);
         if (storage[index].length === 1 && storage[index][0][0] === key) {
@@ -73,6 +80,11 @@ let HashTable = function () {
         }
     };
 
+    /**
+     * Method that implements a simple Hash Table lookup.
+     * @param {str} key lookup key
+     * @returns value if key is present in the Hash Table, undefined otherwise
+     */
     this.lookup = function(key) {
         var index = hash(key, storageLimit);
         if (storage[index] === undefined) {
