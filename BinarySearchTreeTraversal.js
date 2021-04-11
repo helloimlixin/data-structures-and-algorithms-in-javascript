@@ -196,22 +196,210 @@ class BST {
         }
         this.root = removeNode(this.root, data); // call the function at the end
     }
+
+    // Method that checks if the BST is balanced.
+    isBalanced() {
+        // If the BST is balanced, then the difference bewteen minHeight
+        // and maxHeight is at least 1.
+        return (this.findMinHeight() >= this.findMaxHeight() - 1);
+    }
+
+    /** 
+     * Method that finds the minHeight of a BST.
+     * The minHeight of a BST is the number of nodes along the shortest path
+     * from the root node to the nearest leaf node.
+     * 
+     * The minHeight the distance from the root node to the first leaf node
+     * without two children.
+     */
+    findMinHeight(node = this.root) {
+        if (node === null) {
+            return -1;
+        };
+        let left = this.findMinHeight(node.left);
+        let right = this.findMinHeight(node.right);
+        if (left < right) {
+            return left + 1;
+        } else {
+            return right + 1;
+        };
+    }
+
+    /**
+     * Method that finds the maxHeight of a BST.
+     * The maxHeight of a BST is the distance between the root node and the
+     * furthest node.
+     * @param {Node} node 
+     * @returns maxHeight of the BST
+     */
+    findMaxHeight(node = this.root) {
+        if (node === null) {
+            return -1;
+        };
+        let left = this.findMaxHeight(node.left);
+        let right = this.findMaxHeight(node.right);
+        if (left > right) {
+            return left + 1;
+        } else {
+            return right + 1;
+        };
+    }
+
+    /**============================================
+     *               BST TRAVERSALS
+     * 
+     * The word "order" in in-order, pre-order, post-order traversals
+     * refers to when we will traverse the root node.
+     *=============================================**/
+    
+    /**
+     * Method that performs the in-order traversal on a BST.
+     * In-order traversal is to traverse the left subtree first. Then visit the
+     * root. Finally, traverse the right subtree.
+     * @returns an array containing the in-order traversal result
+     */
+    inOrder() {
+        // Sanity check.
+        if (this.root === null) {
+            return null;
+        } else {
+            var result = new Array();
+            function traverseInOrder(node) {
+                // Recursion until there's no left child.
+                node.left && traverseInOrder(node.left);
+                // Traverse the root node next.
+                result.push(node.data);
+                // Travese the right subtree.
+                node.right && traverseInOrder(node.right);
+            }
+            traverseInOrder(this.root);
+            return result;
+        };
+    }
+
+    /**
+     * Method that performs the pre-order traversal on a BST.
+     * Pre-order traversal is to traverse the root first, then the left subtree,
+     * then the right subtree.
+     * @returns an array containing the pre-order traversal result
+     */
+    preOrder() {
+        // Sanity check.
+        if (this.root === null) {
+            return null;
+        } else {
+            var result = new Array();
+            function traversePreOrder(node) {
+                // Traverse root node first.
+                result.push(node.data);
+                // Travese the left subtree.
+                node.left && traversePreOrder(node.left);
+                // Traverse the right subtree.
+                node.right && traversePreOrder(node.right);
+            };
+            traversePreOrder(this.root);
+            return result;
+        }
+    }
+
+    /**
+     * Method that performs post-order traversal on a BST.
+     * Post-order traversal is to traverse the left subtree first, then traverse
+     * the right subtree, finally, visit the root.
+     * @returns an array containing the result of post-order traversal on a BST
+     */
+    postOrder() {
+        // Sanity check.
+        if (this.root === null) {
+            return null;
+        } else {
+            var result = new Array();
+            function traversePostOrder(node) {
+                // Traverse the left subtree first.
+                node.left && traversePostOrder(node.left);
+                // Traverse the right subtree.
+                node.right && traversePostOrder(node.right);
+                // Traverse the root node.
+                result.push(node.data);
+            };
+            traversePostOrder(this.root);
+            return result;
+        }
+    }
+
+    /*================== Lever-Order Traversal =================*/
+    
+    /**
+     * Method that performs level-order traversal on a BST.
+     * Level-order traversal is to traverse the tree level by level.
+     * Breadth-First Search is an algorithm to traverse or search in data
+     * structures like a tree or a graph. The algorithm starts with a root node
+     * and visit the node itself first. Then traverse its neighbors, traverse
+     * its second level neighbors, ...
+     * 
+     * Here we are using a Queue implementation for the Breadth-First Search
+     * Level-Order Tree Traversal procedure.
+     * @returns an array containing the level-order traversal of the BST
+     */
+    levelOrder() {
+        let result = [];
+        let Q = [];
+        if (this.root !== null) {
+            Q.push(this.root);
+            while (Q.length > 0) {
+                let node = Q.shift();
+                result.push(node.data);
+                if (node.left !== null) {
+                    Q.push(node.left);
+                };
+                if (node.right !== null) {
+                    Q.push(node.right);
+                };
+            };
+            return result;
+        } else {
+            return null;
+        };
+    }
 }
 
 /** Tests */
 
 const bst = new BST();
 
+// bst.add(4);
+// bst.add(2);
+// bst.add(6);
+// bst.add(1);
+// bst.add(3);
+// bst.add(5);
+// bst.add(7);
+// bst.remove(4);
+// console.log(bst.findMin());
+// console.log(bst.findMax());
+// bst.remove(7);
+// console.log(bst.findMax());
+// console.log(bst.isPresent(4));
+
+bst.add(9);
 bst.add(4);
-bst.add(2);
-bst.add(6);
-bst.add(1);
+bst.add(17);
 bst.add(3);
+bst.add(6);
+bst.add(22);
 bst.add(5);
 bst.add(7);
-bst.remove(4);
-console.log(bst.findMin());
-console.log(bst.findMax());
-bst.remove(7);
-console.log(bst.findMax());
-console.log(bst.isPresent(4));
+bst.add(20);
+
+console.log(bst.findMinHeight());
+console.log(bst.findMaxHeight());
+console.log(bst.isBalanced());
+bst.add(10);
+console.log(bst.findMinHeight());
+console.log(bst.findMaxHeight());
+console.log(bst.isBalanced());
+console.log('in-order: ' + bst.inOrder());
+console.log('pre-order: ' + bst.preOrder());
+console.log('post-order: ' + bst.postOrder());
+
+console.log('level-order: ' + bst.levelOrder())
