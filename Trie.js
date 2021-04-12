@@ -1,5 +1,6 @@
 /** 
  * Trie
+ * 
  * A Trie is a special form of a Nary tree, it's typically used to store
  * strings. Each Trie node represents a string (a prefix, hence Trie sometimes
  * is also called Prefix Tree). Each node might have several children nodes
